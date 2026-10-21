@@ -5,5 +5,3 @@ __pycache__/
 .ipynb_checkpoints/
 dataset/
 results/
-git config --global user.name "Lakshii-06"
-git config --global user.email "vh14140@velhightech.com"
