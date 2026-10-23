@@ -26,9 +26,12 @@ models_to_train = {
 
 results = []
 
+import time
+
 for model_name, model in models_to_train.items():
     print(f"\nTraining: {model_name}")
     print("Parameters:", model.count_params())
+    start_time = time.perf_counter()
 
     history = model.fit(
         x_train,
@@ -38,7 +41,9 @@ for model_name, model in models_to_train.items():
         validation_split=0.1,
         verbose=1
     )
-
+    training_time = time.perf_counter() - start_time
+    print(f"Training time: {training_time:.2f} seconds")
+    
     test_loss, test_accuracy = model.evaluate(
         x_test, y_test, verbose=1
     )
@@ -50,7 +55,8 @@ for model_name, model in models_to_train.items():
         "Test Loss": round(test_loss, 4),
         "Final Validation Accuracy (%)": round(
             history.history["val_accuracy"][-1] * 100, 2
-        )
+        ),
+        "Training Time (seconds)": round(training_time, 2)
     })
 
     model.save(
